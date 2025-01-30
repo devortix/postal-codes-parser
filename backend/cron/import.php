@@ -233,7 +233,6 @@ function deleteOldRecords(PDO $pdo, array $ids = []): void
 
         // Якщо є ID для видалення, виконуємо запит на видалення
         if (!empty($idsToDelete)) {
-            echo implode(',',$idsToDelete);
             // Запит для видалення цих записів
             $idsToDeleteStr = implode(',', $idsToDelete);
             $deleteStmt = $pdo->prepare("DELETE FROM postal_codes WHERE code IN ($idsToDeleteStr)");
