@@ -43,4 +43,4 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --fil
 
 WORKDIR /app
 
-RUN composer install
+CMD ["composer", "install"]
