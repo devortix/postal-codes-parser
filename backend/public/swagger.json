@@ -1,0 +1,256 @@
+{
+    "openapi": "3.0.0",
+    "paths": {
+        "/": {
+            "get": {
+                "tags": [
+                    "Поштові індекси"
+                ],
+                "summary": "Отримання поштових індексів",
+                "description": "Отримання списку поштових індексів з можливістю фільтрації за параметрами",
+                "operationId": "9dab036005571394c0238fe441a869fc",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Номер сторінки для пагінації",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "description": "Пошук за поштовим індексом",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "address",
+                        "in": "query",
+                        "description": "Пошук за адресою відділення (пошук за допомогою LIKE)",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Список поштових індексів",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "items": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "code": {
+                                                        "type": "string"
+                                                    },
+                                                    "region": {
+                                                        "type": "string"
+                                                    },
+                                                    "district": {
+                                                        "type": "string"
+                                                    },
+                                                    "district_old": {
+                                                        "type": "string",
+                                                        "nullable": true
+                                                    },
+                                                    "city": {
+                                                        "type": "string"
+                                                    },
+                                                    "region_slug": {
+                                                        "type": "string"
+                                                    },
+                                                    "district_slug": {
+                                                        "type": "string"
+                                                    },
+                                                    "city_slug": {
+                                                        "type": "string"
+                                                    },
+                                                    "office_name": {
+                                                        "type": "string"
+                                                    },
+                                                    "office_slug": {
+                                                        "type": "string"
+                                                    },
+                                                    "office_code": {
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "pagination": {
+                                            "properties": {
+                                                "currentPage": {
+                                                    "type": "integer"
+                                                },
+                                                "totalPages": {
+                                                    "type": "integer"
+                                                },
+                                                "totalItems": {
+                                                    "type": "integer"
+                                                },
+                                                "limit": {
+                                                    "type": "integer"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Поштові індекси"
+                ],
+                "summary": "Створення поштового індексу",
+                "description": "Створення нового поштового індексу з детальною інформацією",
+                "operationId": "1f3c6852c6821cec393bc11044fe1bae",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "code",
+                                    "region",
+                                    "district",
+                                    "city",
+                                    "region_slug",
+                                    "district_slug",
+                                    "city_slug",
+                                    "office_name",
+                                    "office_slug",
+                                    "office_code"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "type": "string",
+                                        "maxLength": 6
+                                    },
+                                    "region": {
+                                        "type": "string",
+                                        "maxLength": 30
+                                    },
+                                    "district": {
+                                        "type": "string",
+                                        "maxLength": 30
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "maxLength": 30
+                                    },
+                                    "region_slug": {
+                                        "type": "string",
+                                        "maxLength": 30
+                                    },
+                                    "district_slug": {
+                                        "type": "string",
+                                        "maxLength": 30
+                                    },
+                                    "city_slug": {
+                                        "type": "string",
+                                        "maxLength": 30
+                                    },
+                                    "office_name": {
+                                        "type": "string",
+                                        "maxLength": 100
+                                    },
+                                    "office_slug": {
+                                        "type": "string",
+                                        "maxLength": 100
+                                    },
+                                    "office_code": {
+                                        "type": "string",
+                                        "maxLength": 6
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Поштовий індекс успішно створений",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Помилка валідації",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Некоректні дані"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/{code}": {
+            "delete": {
+                "tags": [
+                    "Поштові індекси"
+                ],
+                "summary": "Видалення поштового індексу",
+                "description": "Видалення поштового індексу за кодом",
+                "operationId": "aeda8d0d4acad096bc02b48c66f87a0a",
+                "parameters": [
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "description": "Код поштового індексу, який потрібно видалити",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Поштовий індекс успішно видалено",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Поштові індекси",
+            "description": "Поштові індекси"
+        }
+    ]
+}
